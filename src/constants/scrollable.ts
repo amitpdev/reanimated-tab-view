@@ -18,3 +18,5 @@ export enum ScrollableType {
   SECTION_LIST = 'SECTION_LIST',
   FLASH_LIST = 'FLASH_LIST',
 }
+
+export const SHOULD_RENDER_ABSOLUTE_HEADER = Platform.OS === 'android';

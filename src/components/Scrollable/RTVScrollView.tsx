@@ -16,6 +16,7 @@ import { useSyncScrollWithPanTranslation } from '../../hooks/scrollable/useSyncS
 import type { ScrollView } from 'react-native';
 import type { NativeSyntheticEvent } from 'react-native';
 import type { NativeScrollEvent } from 'react-native';
+import { SHOULD_RENDER_ABSOLUTE_HEADER } from '../../constants/scrollable';
 
 export const RTVScrollView = React.memo(
   forwardRef<
@@ -37,7 +38,8 @@ export const RTVScrollView = React.memo(
     //#region context
     const { animatedTranslateYSV } = useScrollableContext();
 
-    const { tabViewHeaderLayout, tabViewCarouselLayout } = useInternalContext();
+    const { tabViewHeaderLayout, tabBarLayout, tabViewCarouselLayout } =
+      useInternalContext();
 
     //#endregion
 
@@ -58,11 +60,28 @@ export const RTVScrollView = React.memo(
     const animatedContentContainerStyle = useAnimatedStyle(() => {
       return {
         transform: [{ translateY: animatedTranslateYSV.value }],
+      };
+    }, [animatedTranslateYSV]);
+
+    const translatingContentContainerStyle = useMemo(() => {
+      return {
+        ...animatedContentContainerStyle,
         paddingBottom: tabViewHeaderLayout.height,
         minHeight: tabViewCarouselLayout.height + tabViewHeaderLayout.height,
       };
     }, [
-      animatedTranslateYSV,
+      animatedContentContainerStyle,
+      tabViewCarouselLayout.height,
+      tabViewHeaderLayout.height,
+    ]);
+
+    const nonTranslatingContentContainerStyle = useMemo(() => {
+      return {
+        paddingTop: tabBarLayout.height + tabViewHeaderLayout.height,
+        minHeight: tabViewCarouselLayout.height + tabViewHeaderLayout.height,
+      };
+    }, [
+      tabBarLayout.height,
       tabViewCarouselLayout.height,
       tabViewHeaderLayout.height,
     ]);
@@ -125,11 +144,25 @@ export const RTVScrollView = React.memo(
           onScroll={handleScroll}
           scrollEventThrottle={16}
         >
-          <Animated.View
-            style={[styles.contentContainer, animatedContentContainerStyle]}
-          >
-            {children}
-          </Animated.View>
+          {SHOULD_RENDER_ABSOLUTE_HEADER ? (
+            <Animated.View
+              style={[
+                styles.contentContainer,
+                nonTranslatingContentContainerStyle,
+              ]}
+            >
+              {children}
+            </Animated.View>
+          ) : (
+            <Animated.View
+              style={[
+                styles.contentContainer,
+                translatingContentContainerStyle,
+              ]}
+            >
+              {children}
+            </Animated.View>
+          )}
         </Animated.ScrollView>
       </GestureDetector>
     );
