@@ -47,7 +47,10 @@ export const RTVScrollView = React.memo(
     const scrollRef = useAnimatedRef<Animated.ScrollView>();
 
     const scrollGesture = useMemo(
-      () => Gesture.Native().shouldCancelWhenOutside(false),
+      () =>
+        Gesture.Native()
+          .shouldCancelWhenOutside(false)
+          .disallowInterruption(true),
       []
     );
 
