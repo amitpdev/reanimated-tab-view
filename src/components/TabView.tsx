@@ -32,7 +32,7 @@ import { SHOULD_RENDER_ABSOLUTE_HEADER } from '../constants/scrollable';
 
 export const TabViewWithoutProviders = React.memo(() => {
   //#region context
-  const { tabBarPosition, tabBarStyle, tabStyle, renderTabBar } =
+  const { tabBarPosition, tabBarStyle, tabStyle, tabLabelStyle, renderTabBar } =
     usePropsContext();
 
   const { tabViewLayout, tabViewCarouselRef, setTabViewLayout } =
@@ -84,6 +84,7 @@ export const TabViewWithoutProviders = React.memo(() => {
       return renderTabBar({
         getLabelText: (scene) => scene.route.title,
         tabStyle,
+        labelStyle: tabLabelStyle,
         style: tabBarStyle,
       });
     }
@@ -91,10 +92,11 @@ export const TabViewWithoutProviders = React.memo(() => {
       <TabBar
         getLabelText={(scene) => scene.route.title}
         tabStyle={tabStyle}
+        labelStyle={tabLabelStyle}
         style={tabBarStyle}
       />
     );
-  }, [renderTabBar, tabStyle, tabBarStyle]);
+  }, [renderTabBar, tabStyle, tabLabelStyle, tabBarStyle]);
   //#endregion
 
   //#region render
@@ -168,6 +170,7 @@ export const TabView = React.memo(
       tabBarStyle,
       tabBarIndicatorStyle,
       tabStyle,
+      tabLabelStyle,
       renderTabBar,
     } = tabBarConfig ?? {};
     //#endregion
@@ -245,6 +248,7 @@ export const TabView = React.memo(
         tabBarStyle,
         tabBarIndicatorStyle,
         tabStyle,
+        tabLabelStyle,
         swipeEnabled,
         jumpMode,
         sceneContainerGap,
@@ -269,6 +273,7 @@ export const TabView = React.memo(
       tabBarStyle,
       tabBarIndicatorStyle,
       tabStyle,
+      tabLabelStyle,
       swipeEnabled,
       jumpMode,
       sceneContainerGap,
