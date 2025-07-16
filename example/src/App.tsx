@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -13,6 +14,7 @@ import {
   TabView as ReanimatedTabView,
   type NavigationState,
   type TabViewMethods,
+  RTVScrollView,
 } from 'reanimated-tab-view';
 import {
   TabView as TabView,
@@ -43,14 +45,17 @@ const Scene = ({
 }: {
   backgroundColor: string;
   text: string;
+  routeIndex: number;
 }) => {
   // React.useEffect(() => {
   //   for (let i = 0; i < 100000000; i++) {}
   // }, []);
   return (
-    <View style={[styles.scene, { backgroundColor }]}>
-      <Text style={styles.sceneText}>{text}</Text>
-    </View>
+    <RTVScrollView>
+      <View style={[{ backgroundColor, height: 1500 }]}>
+        <Text style={styles.sceneText}>{text}</Text>
+      </View>
+    </RTVScrollView>
   );
 };
 
@@ -90,7 +95,21 @@ export default function App() {
       <Scene
         backgroundColor={route.color}
         text={`Scene ${converter.toWords(parseInt(route.key, 10) + 1)}`}
+        routeIndex={parseInt(route.key, 10)}
       />
+    );
+  }, []);
+
+  const renderHeader = React.useCallback(() => {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          console.error('pressed');
+        }}
+        style={{ backgroundColor: 'magenta' }}
+      >
+        <Text style={{ height: 200 }}>Header</Text>
+      </TouchableOpacity>
     );
   }, []);
 
@@ -115,6 +134,7 @@ export default function App() {
             onIndexChange={handleIndexChange}
             navigationState={navigationState}
             renderScene={renderScene}
+            renderHeader={renderHeader}
             initialLayout={initialLayout}
           />
         ) : (
