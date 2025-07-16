@@ -28,6 +28,7 @@ import { TabViewHeader } from './TabViewHeader';
 import { ScrollableContextProvider } from '../providers/Scrollable';
 import { useGestureContentTranslateYStyle } from '../hooks/scrollable/useGestureContentTranslateYStyle';
 import { useScrollLikePanGesture } from '../hooks/scrollable/useScrollLikePanGesture';
+import { SHOULD_RENDER_ABSOLUTE_HEADER } from '../constants/scrollable';
 
 export const TabViewWithoutProviders = React.memo(() => {
   //#region context
@@ -44,7 +45,7 @@ export const TabViewWithoutProviders = React.memo(() => {
     return { width };
   }, [tabViewLayout]);
 
-  const contentStyle = useMemo(() => {
+  const translatingTabViewContentStyle = useMemo(() => {
     return tabViewLayout.height
       ? {
           height: tabViewLayout.height,
@@ -98,19 +99,41 @@ export const TabViewWithoutProviders = React.memo(() => {
 
   //#region render
   return (
-    <GestureDetector gesture={scrollLikePanGesture}>
-      <View
-        style={[styles.container, containerLayoutStyle]}
-        onLayout={onTabViewLayout}
-      >
-        <TabViewHeader style={animatedTranslateYStyle} />
-        <Animated.View style={[contentStyle, animatedTranslateYStyle]}>
-          {tabBarPosition === 'top' && tabBar}
+    <>
+      {SHOULD_RENDER_ABSOLUTE_HEADER ? (
+        <View
+          style={[styles.container, containerLayoutStyle]}
+          onLayout={onTabViewLayout}
+        >
+          <View style={styles.absoluteHeaderContainer}>
+            <GestureDetector gesture={scrollLikePanGesture}>
+              <Animated.View style={animatedTranslateYStyle}>
+                <TabViewHeader />
+                {tabBarPosition === 'top' && tabBar}
+                {tabBarPosition === 'bottom' && tabBar}
+              </Animated.View>
+            </GestureDetector>
+          </View>
           <TabViewCarousel ref={tabViewCarouselRef} />
-          {tabBarPosition === 'bottom' && tabBar}
-        </Animated.View>
-      </View>
-    </GestureDetector>
+        </View>
+      ) : (
+        <GestureDetector gesture={scrollLikePanGesture}>
+          <View
+            style={[styles.container, containerLayoutStyle]}
+            onLayout={onTabViewLayout}
+          >
+            <TabViewHeader style={animatedTranslateYStyle} />
+            <Animated.View
+              style={[translatingTabViewContentStyle, animatedTranslateYStyle]}
+            >
+              {tabBarPosition === 'top' && tabBar}
+              <TabViewCarousel ref={tabViewCarouselRef} />
+              {tabBarPosition === 'bottom' && tabBar}
+            </Animated.View>
+          </View>
+        </GestureDetector>
+      )}
+    </>
   );
   //#endregion
 });
@@ -317,5 +340,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     overflow: 'hidden',
+  },
+  absoluteHeaderContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 1,
   },
 });

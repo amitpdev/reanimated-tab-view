@@ -23,7 +23,8 @@ Additionally, reanimated-tab-view also provides the following features
 
 - Collapsible headers
 
-  <img src="./assets/collapsible_header.gif" width="360">
+  - Currently supported on ios and android
+    <img src="./assets/collapsible_header.gif" width="360">
 
 - 3 render modes to render the tab view ("all", "windowed" and "lazy"). Can be modified using the `renderMode` prop.
 
