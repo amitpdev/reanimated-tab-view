@@ -7,15 +7,17 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from 'react-native-reanimated';
+import { StyleSheet } from 'react-native';
+import type {
+  ScrollView,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+} from 'react-native';
 
 import { useScrollableContext } from '../../providers/Scrollable';
 import { useInternalContext } from '../../providers/Internal';
-import { StyleSheet } from 'react-native';
 import { useScrollHandlers } from '../../hooks/scrollable/useScrollHandlers';
 import { useSyncScrollWithPanTranslation } from '../../hooks/scrollable/useSyncScrollWithPanTranslation';
-import type { ScrollView } from 'react-native';
-import type { NativeSyntheticEvent } from 'react-native';
-import type { NativeScrollEvent } from 'react-native';
 import { SHOULD_RENDER_ABSOLUTE_HEADER } from '../../constants/scrollable';
 
 export const RTVScrollView = React.memo(
