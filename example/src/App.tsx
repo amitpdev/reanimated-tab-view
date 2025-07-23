@@ -47,9 +47,6 @@ const Scene = ({
   text: string;
   routeIndex: number;
 }) => {
-  // React.useEffect(() => {
-  //   for (let i = 0; i < 100000000; i++) {}
-  // }, []);
   return (
     <RTVScrollView>
       <View style={[{ backgroundColor, height: 1500 }]}>
