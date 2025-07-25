@@ -45,6 +45,7 @@ export type TabViewProps = Omit<ViewProps, 'children'> & {
     tabViewHeader?: Partial<Layout>;
   };
   sceneContainerStyle?: StyleProp<ViewStyle>;
+  tabViewCarouselStyle?: StyleProp<ViewStyle>;
   sceneContainerGap?: number;
   style?: StyleProp<ViewStyle>;
   keyboardDismissMode?: KeyboardDismissMode;

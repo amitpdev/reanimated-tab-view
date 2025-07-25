@@ -35,6 +35,7 @@ type PropsContext = {
   jumpMode: JumpMode;
   sceneContainerGap: number;
   sceneContainerStyle: StyleProp<ViewStyle>;
+  tabViewCarouselStyle: StyleProp<ViewStyle>;
   keyboardDismissMode?: KeyboardDismissMode;
   providedAnimatedRouteIndexSV?: SharedValue<number>;
   renderTabBar?: (props: TabBarProps) => React.ReactNode;
@@ -64,6 +65,7 @@ const PropsContext = createContext<PropsContext>({
   jumpMode: 'smooth',
   sceneContainerGap: 0,
   sceneContainerStyle: undefined,
+  tabViewCarouselStyle: undefined,
   keyboardDismissMode: undefined,
   renderTabBar: undefined,
   providedAnimatedRouteIndexSV: undefined,
