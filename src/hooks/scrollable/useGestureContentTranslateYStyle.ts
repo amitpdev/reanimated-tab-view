@@ -1,8 +1,8 @@
 import { useAnimatedStyle } from 'react-native-reanimated';
-import { useScrollableContext } from '../../providers/Scrollable';
+import { useHeaderContext } from '../../providers/Header';
 
 export const useGestureContentTranslateYStyle = () => {
-  const { animatedTranslateYSV } = useScrollableContext();
+  const { animatedTranslateYSV } = useHeaderContext();
 
   return useAnimatedStyle(() => {
     return {

@@ -33,6 +33,7 @@ const TabViewCarouselWithoutProviders = React.memo(
       keyboardDismissMode,
       navigationState,
       sceneContainerStyle,
+      tabViewCarouselStyle,
       renderScene,
       onSwipeStart,
       onSwipeEnd,
@@ -115,7 +116,10 @@ const TabViewCarouselWithoutProviders = React.memo(
     //#region render
     return (
       <GestureDetector gesture={swipePanGesture}>
-        <View style={[styles.container]} onLayout={onTabViewCarouselLayout}>
+        <View
+          style={[styles.container, tabViewCarouselStyle]}
+          onLayout={onTabViewCarouselLayout}
+        >
           {navigationState.routes.map((route, index) => {
             const shouldRender = computeShouldRenderRoute(index);
             const renderOffset = index * translationPerSceneContainer;

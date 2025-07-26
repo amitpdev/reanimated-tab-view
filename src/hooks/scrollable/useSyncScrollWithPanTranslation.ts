@@ -3,7 +3,7 @@ import {
   useAnimatedReaction,
   type SharedValue,
 } from 'react-native-reanimated';
-import { useScrollableContext } from '../../providers/Scrollable';
+import { useHeaderContext } from '../../providers/Header';
 import { useSceneRendererContext } from '../../providers/SceneRenderer';
 import { GestureSource } from '../../constants/scrollable';
 
@@ -14,7 +14,7 @@ export const useSyncScrollWithPanTranslation = (
   scrollYSV: SharedValue<number>
 ) => {
   const { animatedTranslateYSV, gestureSourceSV, translateYBounds } =
-    useScrollableContext();
+    useHeaderContext();
   const { isRouteFocused } = useSceneRendererContext();
 
   useAnimatedReaction(

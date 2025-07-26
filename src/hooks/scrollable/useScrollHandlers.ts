@@ -4,13 +4,13 @@ import {
   type SharedValue,
 } from 'react-native-reanimated';
 import { GestureSource } from '../../constants/scrollable';
-import { useScrollableContext } from '../../providers/Scrollable';
+import { useHeaderContext } from '../../providers/Header';
 import { useSceneRendererContext } from '../../providers/SceneRenderer';
 import type { NativeScrollEvent } from 'react-native';
 
 export const useScrollHandlers = (scrollYSV: SharedValue<number>) => {
   const { animatedTranslateYSV, translateYBounds, gestureSourceSV } =
-    useScrollableContext();
+    useHeaderContext();
 
   const { isRouteFocused } = useSceneRendererContext();
 

@@ -3,10 +3,11 @@ import * as React from 'react';
 import {
   Button,
   Dimensions,
+  Platform,
   SafeAreaView,
+  StatusBar,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -21,6 +22,7 @@ import {
   TabBar as ReactNavigationTabBar,
 } from 'react-native-tab-view';
 import converter from 'number-to-words';
+import { InstagramTabView } from './instagram/InstagramTabView';
 
 const randomColor = (() => {
   const randomInt = (min: number, max: number) => {
@@ -47,9 +49,6 @@ const Scene = ({
   text: string;
   routeIndex: number;
 }) => {
-  // React.useEffect(() => {
-  //   for (let i = 0; i < 100000000; i++) {}
-  // }, []);
   return (
     <RTVScrollView>
       <View style={[{ backgroundColor, height: 1500 }]}>
@@ -100,54 +99,57 @@ export default function App() {
     );
   }, []);
 
-  const renderHeader = React.useCallback(() => {
-    return (
-      <TouchableOpacity
-        onPress={() => {
-          console.error('pressed');
-        }}
-        style={{ backgroundColor: 'magenta' }}
-      >
-        <Text style={{ height: 200 }}>Header</Text>
-      </TouchableOpacity>
-    );
-  }, []);
-
   const handleIndexChange = React.useCallback((index: number) => {
     setNavigationState((state) => ({ ...state, index }));
   }, []);
 
   const tabViewRef = React.useRef<TabViewMethods>(null);
 
+  const [shouldShowInstagramTabView, setShouldShowInstagramTabView] =
+    React.useState(true);
+
   return (
     <GestureHandlerRootView style={styles.gestureHandlerRootView}>
-      <SafeAreaView style={styles.container}>
-        <Text>
-          {`Rendered component: ${
-            showReanimatedTabView ? 'ReanimatedTabView' : 'TabView'
-          }`}
-        </Text>
-        <Button onPress={toggleShowReanimatedTabView} title="TOGGLE" />
-        {showReanimatedTabView ? (
-          <ReanimatedTabView
-            ref={tabViewRef}
-            onIndexChange={handleIndexChange}
-            navigationState={navigationState}
-            renderScene={renderScene}
-            renderHeader={renderHeader}
-            initialLayout={initialLayout}
+      {shouldShowInstagramTabView ? (
+        <SafeAreaView style={styles.darkContainer}>
+          <Button
+            onPress={() => setShouldShowInstagramTabView(false)}
+            title="Back to Home"
           />
-        ) : (
-          <TabView
-            onIndexChange={handleIndexChange}
-            navigationState={navigationState}
-            renderScene={renderScene}
-            renderTabBar={renderTabBar}
-            initialLayout={initialTabViewLayout}
-            style={styles.tabView}
+          <InstagramTabView />
+        </SafeAreaView>
+      ) : (
+        <SafeAreaView style={styles.container}>
+          <Button
+            onPress={() => setShouldShowInstagramTabView(true)}
+            title="Instagram example"
           />
-        )}
-      </SafeAreaView>
+          <Text>
+            {`Rendered component: ${
+              showReanimatedTabView ? 'ReanimatedTabView' : 'TabView'
+            }`}
+          </Text>
+          <Button onPress={toggleShowReanimatedTabView} title="TOGGLE" />
+          {showReanimatedTabView ? (
+            <ReanimatedTabView
+              ref={tabViewRef}
+              onIndexChange={handleIndexChange}
+              navigationState={navigationState}
+              renderScene={renderScene}
+              initialLayout={initialLayout}
+            />
+          ) : (
+            <TabView
+              onIndexChange={handleIndexChange}
+              navigationState={navigationState}
+              renderScene={renderScene}
+              renderTabBar={renderTabBar}
+              initialLayout={initialTabViewLayout}
+              style={styles.tabView}
+            />
+          )}
+        </SafeAreaView>
+      )}
     </GestureHandlerRootView>
   );
 }
@@ -160,6 +162,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+  },
+  darkContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    backgroundColor: 'rgb(64,64,64)',
   },
   box: {
     width: 60,

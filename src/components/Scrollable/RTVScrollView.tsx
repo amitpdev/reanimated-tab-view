@@ -14,7 +14,7 @@ import type {
   NativeScrollEvent,
 } from 'react-native';
 
-import { useScrollableContext } from '../../providers/Scrollable';
+import { useHeaderContext } from '../../providers/Header';
 import { useInternalContext } from '../../providers/Internal';
 import { useScrollHandlers } from '../../hooks/scrollable/useScrollHandlers';
 import { useSyncScrollWithPanTranslation } from '../../hooks/scrollable/useSyncScrollWithPanTranslation';
@@ -38,7 +38,7 @@ export const RTVScrollView = React.memo(
     //#endregion
 
     //#region context
-    const { animatedTranslateYSV } = useScrollableContext();
+    const { animatedTranslateYSV } = useHeaderContext();
 
     const { tabViewHeaderLayout, tabBarLayout, tabViewCarouselLayout } =
       useInternalContext();
