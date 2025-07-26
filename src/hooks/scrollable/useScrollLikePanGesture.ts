@@ -9,13 +9,13 @@ import {
   DECELERATION_RATE_FOR_SCROLLVIEW,
   GestureSource,
 } from '../../constants/scrollable';
-import { useScrollableContext } from '../../providers/Scrollable';
+import { useHeaderContext } from '../../providers/Header';
 
 const ACTIVE_OFFSET_Y = [-10, 10];
 
 export const useScrollLikePanGesture = () => {
   const { animatedTranslateYSV, gestureSourceSV, translateYBounds } =
-    useScrollableContext();
+    useHeaderContext();
 
   const initialTranslateYSV = useSharedValue(0);
 

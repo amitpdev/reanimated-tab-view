@@ -25,7 +25,7 @@ import { PropsContextProvider, usePropsContext } from '../providers/Props';
 import { SCROLLABLE_TAB_WIDTH, TAB_BAR_HEIGHT } from '../constants/tabBar';
 import useHandleIndexChange from '../hooks/useHandlerIndexChange';
 import { TabViewHeader } from './TabViewHeader';
-import { ScrollableContextProvider } from '../providers/Scrollable';
+import { HeaderContextProvider } from '../providers/Header';
 import { useGestureContentTranslateYStyle } from '../hooks/scrollable/useGestureContentTranslateYStyle';
 import { useScrollLikePanGesture } from '../hooks/scrollable/useScrollLikePanGesture';
 import { SHOULD_RENDER_ABSOLUTE_HEADER } from '../constants/scrollable';
@@ -334,9 +334,9 @@ export const TabView = React.memo(
       <PropsContextProvider value={propsContextValue}>
         <InternalContextProvider value={internalContextValue}>
           <TabLayoutContextProvider>
-            <ScrollableContextProvider>
+            <HeaderContextProvider>
               <TabViewWithoutProviders />
-            </ScrollableContextProvider>
+            </HeaderContextProvider>
           </TabLayoutContextProvider>
         </InternalContextProvider>
       </PropsContextProvider>

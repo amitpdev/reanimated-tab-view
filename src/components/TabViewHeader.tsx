@@ -3,7 +3,7 @@ import type { LayoutChangeEvent } from 'react-native';
 import Animated, { useDerivedValue } from 'react-native-reanimated';
 import type { TabViewHeaderProps } from '../types/TabViewHeaderProps';
 import { useInternalContext } from '../providers/Internal';
-import { useScrollableContext } from '../providers/Scrollable';
+import { useHeaderContext } from '../providers/Header';
 import { usePropsContext } from '../providers/Props';
 
 export const TabViewHeader = React.memo<TabViewHeaderProps>(({ style }) => {
@@ -11,7 +11,7 @@ export const TabViewHeader = React.memo<TabViewHeaderProps>(({ style }) => {
 
   const { renderHeader } = usePropsContext();
 
-  const { animatedTranslateYSV } = useScrollableContext();
+  const { animatedTranslateYSV } = useHeaderContext();
 
   const onTabViewHeaderLayout = useCallback(
     ({ nativeEvent }: LayoutChangeEvent) => {
