@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
-import { Dimensions, StyleSheet, Image, View } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import { RTVFlatList } from 'reanimated-tab-view';
+import { Image } from 'expo-image';
 
 type Photo = {
   url: string;
@@ -34,9 +35,15 @@ export const InstagramPhotoGrid: React.FC = React.memo(() => {
 
 const InstagramPhoto = React.memo(({ item }: { item: Photo }) => {
   const source = useMemo(() => ({ uri: item.url }), [item.url]);
+  const placeholder = useMemo(() => ({ blurhash }), []);
   return (
     <View style={styles.photoContainer}>
-      <Image source={source} style={styles.photo} resizeMode="cover" />
+      <Image
+        source={source}
+        style={styles.photo}
+        contentFit="cover"
+        placeholder={placeholder}
+      />
     </View>
   );
 });
@@ -48,6 +55,9 @@ const photos: Photo[] = Array.from({ length: 500 }, (_, index) => {
   };
 });
 
+const blurhash =
+  '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -55,8 +65,8 @@ const styles = StyleSheet.create({
   photoContainer: {
     width: photoWidth,
     height: photoHeight,
-    marginRight: 2,
-    marginBottom: 2,
+    paddingRight: 2,
+    paddingBottom: 2,
     backgroundColor: 'rgb(128,128,128)',
   },
   photo: {
