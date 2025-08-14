@@ -5,15 +5,23 @@ import {
   TabBar,
   type TabBarProps,
   type NavigationState,
+  type TabBarConfig,
 } from 'reanimated-tab-view';
-import { InstagramHeader } from './InstagramHeader';
+import { HEADER_HEIGHT, InstagramHeader } from './InstagramHeader';
 import { InstagramTabContent } from './InstagramTabContent';
 import { InstagramPhotoGrid } from './InstagramPhotosGrid';
 
 const { width: windowWidth } = Dimensions.get('window');
-const initialTabViewLayout = {
+const TAB_BAR_HEIGHT = 40;
+const initialLayout = {
   tabView: {
     width: windowWidth,
+  },
+  tabBar: {
+    height: TAB_BAR_HEIGHT,
+  },
+  tabViewHeader: {
+    height: HEADER_HEIGHT,
   },
 };
 
@@ -69,17 +77,17 @@ export const InstagramTabView = () => {
     [renderTabContent]
   );
 
-  const tabBarConfig = useMemo(
+  const tabBarConfig: TabBarConfig = useMemo(
     () => ({
       renderTabBar,
       tabBarType: 'primary' as const,
       tabBarDynamicWidthEnabled: false,
       tabBarIndicatorStyle: styles.indicator,
+      tabBarStyle: styles.tabBar,
     }),
     [renderTabBar]
   );
 
-  // return renderScene();
   return (
     <TabView
       onIndexChange={handleIndexChange}
@@ -88,7 +96,7 @@ export const InstagramTabView = () => {
       tabBarConfig={tabBarConfig}
       sceneContainerGap={10}
       renderHeader={renderHeader}
-      initialLayout={initialTabViewLayout}
+      initialLayout={initialLayout}
       tabViewCarouselStyle={styles.tabViewCarousel}
     />
   );
@@ -97,7 +105,7 @@ export const InstagramTabView = () => {
 const styles = StyleSheet.create({
   tabBar: {
     backgroundColor: 'rgb(64,64,64)',
-    height: 40,
+    height: TAB_BAR_HEIGHT,
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderColor: 'rgb(98, 98, 98)',

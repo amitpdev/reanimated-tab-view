@@ -8397,6 +8397,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-image@npm:~1.3.5":
+  version: 1.3.5
+  resolution: "expo-image@npm:1.3.5"
+  peerDependencies:
+    expo: "*"
+  checksum: 54949e3c92f55e91531d593c35cfc462f4bd320b8aa5860e63825b85a46872fe0f4d82f31c2a82f04b999ec7e1edc1bb89c8163ff73cc520df8940254c390ede
+  languageName: node
+  linkType: hard
+
 "expo-keep-awake@npm:~12.3.0":
   version: 12.3.0
   resolution: "expo-keep-awake@npm:12.3.0"
@@ -15276,6 +15285,7 @@ __metadata:
     babel-loader: ^8.1.0
     babel-plugin-module-resolver: ^5.0.0
     expo: ~49.0.15
+    expo-image: ~1.3.5
     expo-status-bar: ~1.6.0
     number-to-words: ^1.2.4
     react: 18.2.0

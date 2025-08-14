@@ -1,8 +1,4 @@
-import {
-  scrollTo,
-  useAnimatedReaction,
-  type SharedValue,
-} from 'react-native-reanimated';
+import { scrollTo, useAnimatedReaction } from 'react-native-reanimated';
 import { useHeaderContext } from '../../providers/Header';
 import { useSceneRendererContext } from '../../providers/SceneRenderer';
 import { GestureSource } from '../../constants/scrollable';
@@ -10,12 +6,11 @@ import { GestureSource } from '../../constants/scrollable';
 export const useSyncScrollWithPanTranslation = (
   scrollRef: React.RefObject<
     React.Component<Record<string, any>, Record<string, any>, any>
-  >,
-  scrollYSV: SharedValue<number>
+  >
 ) => {
   const { animatedTranslateYSV, gestureSourceSV, translateYBounds } =
     useHeaderContext();
-  const { isRouteFocused } = useSceneRendererContext();
+  const { isRouteFocused, scrollYSV } = useSceneRendererContext();
 
   useAnimatedReaction(
     () => animatedTranslateYSV.value,

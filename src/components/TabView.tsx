@@ -186,6 +186,7 @@ export const TabView = React.memo(
     const [tabBarLayout, setTabBarLayout] = useState<Layout>({
       width: tabViewLayout.width,
       height: TAB_BAR_HEIGHT,
+      ...initialLayout?.tabBar,
     });
 
     const [tabViewCarouselLayout, setTabViewCarouselLayout] = useState<Layout>({

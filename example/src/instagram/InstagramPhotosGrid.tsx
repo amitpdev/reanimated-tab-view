@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { Dimensions, StyleSheet, Image, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, View } from 'react-native';
 import { RTVFlatList } from 'reanimated-tab-view';
 
 type Photo = {

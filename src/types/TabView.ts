@@ -21,28 +21,31 @@ export type JumpMode = 'smooth' | 'scrolling' | 'no-animation';
 
 export type KeyboardDismissMode = 'none' | 'on-drag' | 'auto';
 
+export type TabBarConfig = {
+  tabBarPosition?: TabBarPosition;
+  tabBarScrollEnabled?: boolean;
+  tabBarDynamicWidthEnabled?: boolean;
+  scrollableTabWidth?: number;
+  tabBarType?: TabBarType;
+  tabBarStyle?: StyleProp<ViewStyle>;
+  tabBarIndicatorStyle?: StyleProp<ViewStyle>;
+  tabStyle?: StyleProp<ViewStyle>;
+  tabLabelStyle?: StyleProp<TextStyle>;
+  renderTabBar?: (props: TabBarProps) => React.ReactNode;
+};
+
 export type TabViewProps = Omit<ViewProps, 'children'> & {
   onIndexChange: (index: number) => void;
   navigationState: NavigationState;
   renderScene: (props: SceneRendererProps) => React.ReactNode;
   animatedRouteIndex?: SharedValue<number>;
-  tabBarConfig?: {
-    tabBarPosition?: TabBarPosition;
-    tabBarScrollEnabled?: boolean;
-    tabBarDynamicWidthEnabled?: boolean;
-    scrollableTabWidth?: number;
-    tabBarType?: TabBarType;
-    tabBarStyle?: StyleProp<ViewStyle>;
-    tabBarIndicatorStyle?: StyleProp<ViewStyle>;
-    tabStyle?: StyleProp<ViewStyle>;
-    tabLabelStyle?: StyleProp<TextStyle>;
-    renderTabBar?: (props: TabBarProps) => React.ReactNode;
-  };
+  tabBarConfig?: TabBarConfig;
   // renderLazyPlaceholder?: (props: { route: Route }) => React.ReactNode;
   jumpMode?: JumpMode;
   initialLayout?: {
     tabView?: Partial<Layout>;
     tabViewHeader?: Partial<Layout>;
+    tabBar?: Partial<Layout>;
   };
   sceneContainerStyle?: StyleProp<ViewStyle>;
   tabViewCarouselStyle?: StyleProp<ViewStyle>;
