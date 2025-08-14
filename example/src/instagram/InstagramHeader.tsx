@@ -8,10 +8,12 @@ import { ProfileDescription } from './ProfileDescription';
 import { ProfileActionButtons } from './ProfileActionButtons';
 import { ProfileHighlights } from './ProfileHighlights';
 
+export const HEADER_HEIGHT = 250;
+
 export const InstagramHeader = () => {
   return (
-    <>
-      <CustomView style={styles.container}>
+    <CustomView style={styles.header}>
+      <CustomView style={styles.profileDetailsContainer}>
         <View style={styles.profileImageContainer}>
           <ProfileImage imageUrl={require('./assets/MainProfilePic.jpg')} />
           <ProfileStats />
@@ -20,12 +22,15 @@ export const InstagramHeader = () => {
         <ProfileActionButtons />
       </CustomView>
       <ProfileHighlights />
-    </>
+    </CustomView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  header: {
+    height: HEADER_HEIGHT,
+  },
+  profileDetailsContainer: {
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
