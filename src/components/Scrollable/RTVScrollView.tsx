@@ -13,21 +13,13 @@ import { useScrollHandlers } from '../../hooks/scrollable/useScrollHandlers';
 import { useSyncScrollWithPanTranslation } from '../../hooks/scrollable/useSyncScrollWithPanTranslation';
 import { SHOULD_RENDER_ABSOLUTE_HEADER } from '../../constants/scrollable';
 
-export const RTVScrollView = React.memo(
+export const RTVScrollViewWithoutScrollHandler = React.memo(
   forwardRef<
     React.ForwardedRef<Animated.ScrollView>,
     React.ComponentProps<typeof ScrollView>
   >((props, ref) => {
     //#region props
-    const {
-      children,
-      onScroll,
-      onScrollEndDrag,
-      onScrollBeginDrag,
-      onMomentumScrollEnd,
-      onMomentumScrollBegin,
-      ...rest
-    } = props;
+    const { children, ...rest } = props;
     //#endregion
 
     //#region context
@@ -48,14 +40,6 @@ export const RTVScrollView = React.memo(
           .disallowInterruption(true),
       []
     );
-
-    const handleScroll = useScrollHandlers({
-      onScroll,
-      onScrollEndDrag,
-      onScrollBeginDrag,
-      onMomentumScrollEnd,
-      onMomentumScrollBegin,
-    });
     //#endregion
 
     //#region styles
@@ -98,12 +82,7 @@ export const RTVScrollView = React.memo(
     //#region render
     return (
       <GestureDetector gesture={scrollGesture}>
-        <Animated.ScrollView
-          ref={scrollRef}
-          {...rest}
-          onScroll={handleScroll}
-          scrollEventThrottle={16}
-        >
+        <Animated.ScrollView ref={scrollRef} {...rest} scrollEventThrottle={16}>
           {SHOULD_RENDER_ABSOLUTE_HEADER ? (
             <Animated.View
               style={[
@@ -125,6 +104,50 @@ export const RTVScrollView = React.memo(
           )}
         </Animated.ScrollView>
       </GestureDetector>
+    );
+    //#endregion
+  })
+);
+
+export const RTVScrollView = React.memo(
+  forwardRef<
+    React.ForwardedRef<Animated.ScrollView>,
+    React.ComponentProps<typeof ScrollView>
+  >((props, ref) => {
+    //#region props
+    const {
+      onScroll,
+      onScrollEndDrag,
+      onScrollBeginDrag,
+      onMomentumScrollEnd,
+      onMomentumScrollBegin,
+      ...rest
+    } = props;
+    //#endregion
+
+    //#region variables
+    const scrollRef = useAnimatedRef<Animated.ScrollView>();
+
+    const handleScroll = useScrollHandlers({
+      onScroll,
+      onScrollEndDrag,
+      onScrollBeginDrag,
+      onMomentumScrollEnd,
+      onMomentumScrollBegin,
+    });
+    //#endregion
+
+    //#region hooks
+    useImperativeHandle(ref, () => scrollRef.current as any);
+    //#endregion
+
+    //#region render
+    return (
+      <RTVScrollViewWithoutScrollHandler
+        {...rest}
+        onScroll={handleScroll}
+        ref={ref}
+      />
     );
     //#endregion
   })
