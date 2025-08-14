@@ -172,7 +172,10 @@ export const TabBar = React.memo((props: TabBarProps) => {
 
   //#region render
   return (
-    <View style={[styles.tabBarContainer, tabBarContainerStyle]}>
+    <View
+      style={[styles.tabBarContainer, tabBarContainerStyle]}
+      onLayout={onTabBarLayout}
+    >
       {tabBarScrollEnabled ? (
         <FlatList
           ref={flatListRef}
@@ -186,13 +189,11 @@ export const TabBar = React.memo((props: TabBarProps) => {
           onScrollToIndexFailed={handleScrollToIndexFailed}
           ListHeaderComponent={tabIndicatorComponent}
           style={styles.tabBar}
-          onLayout={onTabBarLayout}
         />
       ) : (
         <View
           {...restProps}
           style={[styles.tabBar, styles.nonScrollableTabBar]}
-          onLayout={onTabBarLayout}
         >
           {routes.map((route, index) => (
             <React.Fragment key={index}>
