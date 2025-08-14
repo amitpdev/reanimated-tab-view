@@ -79,7 +79,6 @@ export const InstagramTabView = () => {
     [renderTabBar]
   );
 
-  // return renderScene();
   return (
     <TabView
       onIndexChange={handleIndexChange}
