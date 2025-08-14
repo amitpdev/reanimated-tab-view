@@ -43,6 +43,7 @@ export type TabViewProps = Omit<ViewProps, 'children'> & {
   initialLayout?: {
     tabView?: Partial<Layout>;
     tabViewHeader?: Partial<Layout>;
+    tabBar?: Partial<Layout>;
   };
   sceneContainerStyle?: StyleProp<ViewStyle>;
   tabViewCarouselStyle?: StyleProp<ViewStyle>;
