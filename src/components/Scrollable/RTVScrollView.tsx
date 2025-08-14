@@ -1,18 +1,11 @@
 import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
-  runOnJS,
   useAnimatedRef,
-  useAnimatedScrollHandler,
   useAnimatedStyle,
-  useSharedValue,
 } from 'react-native-reanimated';
 import { StyleSheet } from 'react-native';
-import type {
-  ScrollView,
-  NativeSyntheticEvent,
-  NativeScrollEvent,
-} from 'react-native';
+import type { ScrollView } from 'react-native';
 
 import { useHeaderContext } from '../../providers/Header';
 import { useInternalContext } from '../../providers/Internal';
@@ -28,11 +21,11 @@ export const RTVScrollView = React.memo(
     //#region props
     const {
       children,
-      onScroll: _onScroll,
-      onScrollEndDrag: _onScrollEndDrag,
-      onScrollBeginDrag: _onScrollBeginDrag,
-      onMomentumScrollEnd: _onMomentumScrollEnd,
-      onMomentumScrollBegin: _onMomentumScrollBegin,
+      onScroll,
+      onScrollEndDrag,
+      onScrollBeginDrag,
+      onMomentumScrollEnd,
+      onMomentumScrollBegin,
       ...rest
     } = props;
     //#endregion
@@ -56,9 +49,13 @@ export const RTVScrollView = React.memo(
       []
     );
 
-    const scrollYSV = useSharedValue(0);
-
-    const { onBeginDrag, onScroll } = useScrollHandlers(scrollYSV);
+    const handleScroll = useScrollHandlers({
+      onScroll,
+      onScrollEndDrag,
+      onScrollBeginDrag,
+      onMomentumScrollEnd,
+      onMomentumScrollBegin,
+    });
     //#endregion
 
     //#region styles
@@ -92,52 +89,10 @@ export const RTVScrollView = React.memo(
     ]);
     //#endregion
 
-    //#region callbacks
-    const handleScroll = useAnimatedScrollHandler({
-      onScroll: (event) => {
-        onScroll(event);
-        if (_onScroll) {
-          runOnJS(_onScroll)({
-            nativeEvent: event,
-          } as NativeSyntheticEvent<NativeScrollEvent>);
-        }
-      },
-      onBeginDrag: (event) => {
-        onBeginDrag();
-        if (_onScrollBeginDrag) {
-          runOnJS(_onScrollBeginDrag)({
-            nativeEvent: event,
-          } as NativeSyntheticEvent<NativeScrollEvent>);
-        }
-      },
-      onEndDrag: (event) => {
-        if (_onScrollEndDrag) {
-          runOnJS(_onScrollEndDrag)({
-            nativeEvent: event,
-          } as NativeSyntheticEvent<NativeScrollEvent>);
-        }
-      },
-      onMomentumEnd: (event) => {
-        if (_onMomentumScrollEnd) {
-          runOnJS(_onMomentumScrollEnd)({
-            nativeEvent: event,
-          } as NativeSyntheticEvent<NativeScrollEvent>);
-        }
-      },
-      onMomentumBegin: (event) => {
-        if (_onMomentumScrollBegin) {
-          runOnJS(_onMomentumScrollBegin)({
-            nativeEvent: event,
-          } as NativeSyntheticEvent<NativeScrollEvent>);
-        }
-      },
-    });
-    //#endregion
-
     //#region hooks
     useImperativeHandle(ref, () => scrollRef.current as any);
 
-    useSyncScrollWithPanTranslation(scrollRef, scrollYSV);
+    useSyncScrollWithPanTranslation(scrollRef);
     //#endregion
 
     //#region render

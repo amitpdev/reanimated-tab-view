@@ -1,18 +1,36 @@
 import {
   cancelAnimation,
+  runOnJS,
+  useAnimatedScrollHandler,
   useWorkletCallback,
-  type SharedValue,
 } from 'react-native-reanimated';
+import type {
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  ScrollViewProps,
+} from 'react-native';
 import { GestureSource } from '../../constants/scrollable';
 import { useHeaderContext } from '../../providers/Header';
 import { useSceneRendererContext } from '../../providers/SceneRenderer';
-import type { NativeScrollEvent } from 'react-native';
 
-export const useScrollHandlers = (scrollYSV: SharedValue<number>) => {
+export const useScrollHandlers = ({
+  onScroll: _onScroll,
+  onScrollEndDrag: _onScrollEndDrag,
+  onScrollBeginDrag: _onScrollBeginDrag,
+  onMomentumScrollEnd: _onMomentumScrollEnd,
+  onMomentumScrollBegin: _onMomentumScrollBegin,
+}: Pick<
+  ScrollViewProps,
+  | 'onScroll'
+  | 'onScrollEndDrag'
+  | 'onScrollBeginDrag'
+  | 'onMomentumScrollEnd'
+  | 'onMomentumScrollBegin'
+>) => {
   const { animatedTranslateYSV, translateYBounds, gestureSourceSV } =
     useHeaderContext();
 
-  const { isRouteFocused } = useSceneRendererContext();
+  const { isRouteFocused, scrollYSV } = useSceneRendererContext();
 
   const onBeginDrag = useWorkletCallback(() => {
     if (!isRouteFocused) {
@@ -38,5 +56,45 @@ export const useScrollHandlers = (scrollYSV: SharedValue<number>) => {
     [animatedTranslateYSV, gestureSourceSV, translateYBounds, isRouteFocused]
   );
 
-  return { onBeginDrag, onScroll };
+  const handleScroll = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      onScroll(event);
+      if (_onScroll) {
+        runOnJS(_onScroll)({
+          nativeEvent: event,
+        } as NativeSyntheticEvent<NativeScrollEvent>);
+      }
+    },
+    onBeginDrag: (event) => {
+      onBeginDrag();
+      if (_onScrollBeginDrag) {
+        runOnJS(_onScrollBeginDrag)({
+          nativeEvent: event,
+        } as NativeSyntheticEvent<NativeScrollEvent>);
+      }
+    },
+    onEndDrag: (event) => {
+      if (_onScrollEndDrag) {
+        runOnJS(_onScrollEndDrag)({
+          nativeEvent: event,
+        } as NativeSyntheticEvent<NativeScrollEvent>);
+      }
+    },
+    onMomentumEnd: (event) => {
+      if (_onMomentumScrollEnd) {
+        runOnJS(_onMomentumScrollEnd)({
+          nativeEvent: event,
+        } as NativeSyntheticEvent<NativeScrollEvent>);
+      }
+    },
+    onMomentumBegin: (event) => {
+      if (_onMomentumScrollBegin) {
+        runOnJS(_onMomentumScrollBegin)({
+          nativeEvent: event,
+        } as NativeSyntheticEvent<NativeScrollEvent>);
+      }
+    },
+  });
+
+  return handleScroll;
 };

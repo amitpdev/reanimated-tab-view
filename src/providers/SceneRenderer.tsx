@@ -1,15 +1,18 @@
 import React, { createContext, useContext, useMemo } from 'react';
+import { useSharedValue, type SharedValue } from 'react-native-reanimated';
 import { useInternalContext } from '../providers/Internal';
 import type { Route } from '../types';
 
 type SceneRendererContext = {
   route: Route;
   isRouteFocused: boolean;
+  scrollYSV: SharedValue<number>;
 };
 
 const SceneRendererContext = createContext<SceneRendererContext>({
   route: { key: '', title: '' },
   isRouteFocused: false,
+  scrollYSV: { value: 0 },
 });
 
 type SceneRendererContextProviderProps = {
@@ -27,12 +30,15 @@ export const SceneRendererContextProvider =
         return index === currentRouteIndex;
       }, [index, currentRouteIndex]);
 
+      const scrollYSV = useSharedValue(0);
+
       const value = useMemo(
         () => ({
           route,
           isRouteFocused,
+          scrollYSV,
         }),
-        [route, isRouteFocused]
+        [route, isRouteFocused, scrollYSV]
       );
 
       return (
