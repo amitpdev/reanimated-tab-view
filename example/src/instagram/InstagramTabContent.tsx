@@ -72,8 +72,3 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
 });
-
-// styles.activeLabel,
-// animatedActiveLabelStyle,
-// activeColorStyle,
-// labelStyle,
