@@ -1,12 +1,14 @@
 # Reanimated Tab View
 
+<a href="./assets/instagram_demo.mp4"><img src="./assets/instagram_demo.gif" style="display: block; margin: 0 auto;"></a>
+
 A custom Tab View component implemented using [`react-native-reanimated`](https://github.com/software-mansion/react-native-reanimated/) and [`react-native-gesture-handler`](https://github.com/software-mansion/react-native-gesture-handler/). Props are almost entirely inter-compatible with [`react-native-tab-view`](https://github.com/satya164/react-native-tab-view)
 
 - The [example/](https://github.com/adithyavis/reanimated-tab-view/tree/main/example) folder contains reference code to use the library.
 
 ## Demo
 
-<a href="https://github.com/adithyavis/reanimated-tab-view/raw/main/assets/assets_demo.mp4"><img src="./assets/assets_demo.gif" width="360"></a>
+<a href="./assets/assets_demo.mp4"><img src="./assets/assets_demo.gif" width="360" style="display: block; margin: 0 auto;"></a>
 
 ## Features
 
@@ -24,6 +26,7 @@ Additionally, reanimated-tab-view also provides the following features
 - Collapsible headers
 
   - Currently supported on ios and android
+
     <img src="./assets/collapsible_header.gif" width="360">
 
 - 3 render modes to render the tab view ("all", "windowed" and "lazy"). Can be modified using the `renderMode` prop.
@@ -169,6 +172,10 @@ tabBarConfig properties are as follows:
 ref methods
 
 - `jumpTo(routeKey: string)`: Jump to a specific route.
+
+## Limitiations
+
+- This project heavily uses `onLayout` method to measure layouts of header, tabBar etc. Since the measurements are done asynchronously, one can see jitters during initial render. To avoid this, pass appropriate values to the initialLayout prop.
 
 ## Author
 
