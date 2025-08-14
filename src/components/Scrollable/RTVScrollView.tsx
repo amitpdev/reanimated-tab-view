@@ -50,11 +50,13 @@ export const RTVScrollViewWithoutScrollHandler = React.memo(
     }, [animatedTranslateYSV]);
 
     const translatingContentContainerStyle = useMemo(() => {
-      return {
-        ...animatedContentContainerStyle,
-        paddingBottom: tabViewHeaderLayout.height,
-        minHeight: tabViewCarouselLayout.height + tabViewHeaderLayout.height,
-      };
+      return [
+        animatedContentContainerStyle,
+        {
+          paddingBottom: tabViewHeaderLayout.height,
+          minHeight: tabViewCarouselLayout.height + tabViewHeaderLayout.height,
+        },
+      ];
     }, [
       animatedContentContainerStyle,
       tabViewCarouselLayout.height,
