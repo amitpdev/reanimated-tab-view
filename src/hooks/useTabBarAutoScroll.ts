@@ -19,7 +19,7 @@ export const useTabBarAutoScroll = (
 
   const autoScrollToRouteIndex = useCallback(
     (routeIndex: number, params?: Partial<AutoScrollToRouteIndexParams>) => {
-      const { animated, shouldScrollToIndex } = {
+      const { animated, shouldScrollToIndex} = {
         animated: true,
         shouldScrollToIndex: false,
         ...params,
@@ -45,8 +45,8 @@ export const useTabBarAutoScroll = (
     [
       flatListRef,
       layout.width,
-      routeIndexToTabOffsetMapSV.value,
-      routeIndexToTabWidthMapSV.value,
+      routeIndexToTabOffsetMapSV,
+      routeIndexToTabWidthMapSV,
     ]
   );
 
@@ -71,8 +71,8 @@ export const useTabBarAutoScroll = (
     [
       flatListRef,
       layout.width,
-      routeIndexToTabOffsetMapSV.value,
-      routeIndexToTabWidthMapSV.value,
+      routeIndexToTabOffsetMapSV,
+      routeIndexToTabWidthMapSV,
     ]
   );
 
