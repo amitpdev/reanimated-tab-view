@@ -147,7 +147,7 @@ export const RTVScrollView = React.memo(
     return (
       <RTVScrollViewWithoutScrollHandler
         {...rest}
-        onScroll={handleScroll}
+        onScroll={handleScroll as any}
         ref={ref}
       />
     );

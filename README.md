@@ -75,9 +75,9 @@ reanimated-tab-view depends purely on react-native-reanimated, and as such, the 
 
 ## Installation
 
-Install react-native-reanimated (>=2.x) and react-native-gesture-handler (>=2.x).
+Install react-native-reanimated (>=4.x) and react-native-gesture-handler (>=2.x).
 
-- https://docs.swmansion.com/react-native-reanimated/docs/2.x/fundamentals/installation
+- https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/getting-started
 - https://docs.swmansion.com/react-native-gesture-handler/docs/fundamentals/installation
 
 Open a Terminal in the project root and run:

@@ -2,8 +2,8 @@ import {
   cancelAnimation,
   runOnJS,
   useAnimatedScrollHandler,
-  useWorkletCallback,
 } from 'react-native-reanimated';
+import { useCallback } from 'react';
 import type {
   NativeScrollEvent,
   NativeSyntheticEvent,
@@ -32,7 +32,8 @@ export const useScrollHandlers = ({
 
   const { isRouteFocused, scrollYSV } = useSceneRendererContext();
 
-  const onBeginDrag = useWorkletCallback(() => {
+  const onBeginDrag = useCallback(() => {
+    'worklet';
     if (!isRouteFocused) {
       return;
     }
@@ -40,8 +41,9 @@ export const useScrollHandlers = ({
     gestureSourceSV.value = GestureSource.SCROLL;
   }, [animatedTranslateYSV, gestureSourceSV, isRouteFocused]);
 
-  const onScroll = useWorkletCallback(
+  const onScroll = useCallback(
     (event: NativeScrollEvent) => {
+      'worklet';
       scrollYSV.value = event.contentOffset.y;
       if (!isRouteFocused) {
         return;
@@ -53,7 +55,7 @@ export const useScrollHandlers = ({
         );
       }
     },
-    [animatedTranslateYSV, gestureSourceSV, translateYBounds, isRouteFocused]
+    [animatedTranslateYSV, gestureSourceSV, translateYBounds, isRouteFocused, scrollYSV]
   );
 
   const handleScroll = useAnimatedScrollHandler({
