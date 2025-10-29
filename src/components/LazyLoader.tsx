@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-type LazyLoaderProps = {
+type LazyLoaderProps = React.PropsWithChildren<{
   shouldLazyLoad: boolean;
   onMount: () => void;
-};
+}>;
 
 const LazyLoader: React.FC<LazyLoaderProps> = React.memo(
   ({ shouldLazyLoad, onMount, children }) => {

@@ -25,7 +25,7 @@ const JumpContext = createContext<JumpContext>({
 
 export const JumpContextProvider = React.memo(function JumpContextProvider({
   children,
-}) {
+}: React.PropsWithChildren<object>) {
   //#region variables
   const { initialRouteIndex } = useInternalContext();
 

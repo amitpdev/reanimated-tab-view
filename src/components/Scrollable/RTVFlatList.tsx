@@ -36,7 +36,7 @@ function _RTVFlatList<T>(
 
   const renderScrollComponent = useCallback(
     (scrollViewProps: ScrollViewProps) => {
-      return <RTVScrollViewWithoutScrollHandler {...scrollViewProps} />;
+      return <RTVScrollViewWithoutScrollHandler {...(scrollViewProps as any)} />;
     },
     []
   );
@@ -45,9 +45,9 @@ function _RTVFlatList<T>(
   return (
     <Animated.FlatList
       ref={flatListRef}
-      {...restProps}
-      renderScrollComponent={renderScrollComponent}
-      onScroll={handleScroll}
+      {...(restProps as any)}
+      renderScrollComponent={renderScrollComponent as any}
+      onScroll={handleScroll as any}
     />
   );
 }

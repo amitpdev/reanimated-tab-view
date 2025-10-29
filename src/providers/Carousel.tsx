@@ -16,7 +16,7 @@ const CarouselContext = createContext<CarouselContext>({
 });
 
 export const CarouselContextProvider = React.memo(
-  function CarouselContextProvider({ children }) {
+  function CarouselContextProvider({ children }: React.PropsWithChildren<object>) {
     //#region context
     const { navigationState, sceneContainerGap } = usePropsContext();
 

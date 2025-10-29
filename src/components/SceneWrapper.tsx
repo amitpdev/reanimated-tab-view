@@ -4,9 +4,9 @@ import Animated, { useAnimatedStyle } from 'react-native-reanimated';
 import { usePropsContext } from '../providers/Props';
 import { useJumpContext } from '../providers/Jump';
 
-type SceneWrapperProps = {
+type SceneWrapperProps = React.PropsWithChildren<{
   routeIndex: number;
-};
+}>;
 
 const SceneWrapper: React.FC<SceneWrapperProps> = React.memo(
   ({ routeIndex, children }) => {

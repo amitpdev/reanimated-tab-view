@@ -7,13 +7,13 @@ import { useInternalContext } from '../providers/Internal';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-type TabProps = {
+type TabProps = React.PropsWithChildren<{
   index: number;
   route: Route;
   style?: StyleProp<ViewStyle>;
   onTabPress?: (scene: Scene) => void;
   onTabLongPress?: (scene: Scene) => void;
-};
+}>;
 const Tab: React.FC<TabProps> = React.memo(
   ({ index, route, style, children, onTabPress, onTabLongPress }) => {
     const { jumpTo } = useInternalContext();

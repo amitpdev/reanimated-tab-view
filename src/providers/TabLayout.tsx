@@ -25,7 +25,7 @@ const TabLayoutContext = createContext<TabLayoutContext>({
   routeIndexToTabContentWidthMapSV: { value: {} },
 });
 
-export const TabLayoutContextProvider: React.FC = React.memo(
+export const TabLayoutContextProvider: React.FC<React.PropsWithChildren<object>> = React.memo(
   function TabLayoutContextProvider({ children }) {
     const [routeIndexToTabContentWidthMap, setRouteIndexToTabContentWidthMap] =
       useState({});

@@ -14,7 +14,7 @@ import { usePropsContext } from '../providers/Props';
 import { useJumpContext } from '../providers/Jump';
 import { useCarouselContext } from '../providers/Carousel';
 
-const ACTIVE_OFFSET_X = [-10, 10];
+const ACTIVE_OFFSET_X: [number, number] = [-10, 10];
 
 export const useCarouselSwipePanGesture = (
   updateCurrentRouteIndex: (value: number) => void,
@@ -187,7 +187,7 @@ export const useCarouselJumpToIndex = (
       runOnUI(() => {
         'worklet';
         const currentRouteIndex = currentRouteIndexSV.value;
-        
+
         /** Only jump if not equal to current route index */
         if (routeIndexToJumpTo === currentRouteIndex) {
           return;
